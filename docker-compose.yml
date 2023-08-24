@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+    nginx:
+        build: ./nginx
+        container_name: nginx
+        ports:
+            - '443:443'
+        networks:
+            - project
+
+networks:
+  project:
+    driver: bridge
+    # mariadb:
+    #     image: mariadb:10.3.9
+    #     container_name: ${APP_NAME:?err}-mariadb
+    #     restart: 'on-failure'
+    #     environment:
+    #         MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?err}
+    #     volumes:
+            # - ${PWD}
