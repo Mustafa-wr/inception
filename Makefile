@@ -1,14 +1,14 @@
 up:
-	@docker compose up -d
+	cd srcs && docker compose up -d
 
 down:
-	@docker compose down
+	cd srcs && docker compose down
 
 build:
-	@docker compose build
+	cd srcs && docker compose build
 
 logs:
-	@docker compose logs -f
+	cd srcs && docker compose logs -f
 
 # clean: down
 # 	@docker compose rm -f
