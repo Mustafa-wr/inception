@@ -48,7 +48,7 @@ RUN openssl genpkey -algorithm RSA -out /etc/nginx/private_key.key && \
     openssl req -new -key /etc/nginx/private_key.key -out /etc/nginx/certificate.csr -subj "/CN=localhost" && \
     openssl x509 -req -days 365 -in /etc/nginx/certificate.csr -signkey /etc/nginx/private_key.key -out /etc/nginx/self_signed_certificate.crt
 
-RUN	echo hello world > /var/www/html/index.html && echo hi hi hi
+# RUN	echo hello world > /var/www/html/index.html && echo hi hi hi
 	
 
 # Expose HTTP and HTTPS ports
@@ -60,4 +60,5 @@ COPY conf/default.conf /etc/nginx/sites-available/default
 
 # Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
+
 
