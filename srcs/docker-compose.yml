@@ -3,38 +3,55 @@ services:
     nginx:
         depends_on:
             - wordpress
-        build: ./nginx
+        build: ./nginx2
         container_name: nginx
+        volumes:
+            - wp:/var/www/wordpress
         ports:
             - '443:443'
         networks:
             - web
     wordpress:
-        depends_on:
-            - mariadb
+        # depends_on:
+        #     - mariadb
         build: ./wordpress
         container_name: wordpress
         restart: always
+        volumes:
+            - wp:/var/www/wordpress
         expose:
             - '9000:9000'
+        env_file:
+            - .env
         # volumes:
         #     - ${PWD}/wordpress:/var/www/html
         networks:
             - web
-    mariadb:
-        build: ./mariadb
-        container_name: mariadb
-        restart: always
-
-        # image: mariadb:10.3.9
-        # container_name: mariadb
-        # restart: 'on-failure'
-        # environment:
-        #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?err}
-        # volumes:
-        #     - ${PWD}/mariadb:/var/lib/mysql
-        networks:
-            - web
+volumes:
+  wp:
+    name: wp
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/mradwan/Desktop/inception/data/wp
+    # mariadb:
+    #     build: ./mariadb
+    #     container_name: mariadb
+    #     # restart: always
+    #   # image: mariadb
+    #     restart: always
+    #     env_file:
+    #         - .env
+    #     # image: mariadb:10.3.9
+    #     # container_name: mariadb
+    #     # restart: 'on-failure'
+    #     # environment:
+    #     #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?err}
+    #     # volumes:
+    #     #     - ${PWD}/mariadb:/var/lib/mysql
+    #     networks:
+    #        - web
 
 networks:
   web:

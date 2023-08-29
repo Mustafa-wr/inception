@@ -10,6 +10,9 @@ build:
 logs:
 	cd srcs && docker compose logs -f
 
+remove_volumes:
+	docker volume rm $$(docker volume ls -q)
+
 # clean: down
 # 	@docker compose rm -f
 
