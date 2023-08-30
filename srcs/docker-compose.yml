@@ -50,8 +50,8 @@ volumes:
     #     #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?err}
     #     # volumes:
     #     #     - ${PWD}/mariadb:/var/lib/mysql
-    #     networks:
-    #        - web
+        # networks:
+        #    - web
 
 networks:
   web:
