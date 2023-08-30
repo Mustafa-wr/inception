@@ -97,6 +97,7 @@ RUN apt-get update && apt-get install -y \
 	rm -rf /var/lib/apt/lists/*
 
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d
+# Copy ./conf/wp-config.php /var/www/wordpress/
 
 ADD https://wordpress.org/latest.tar.gz /var/www/latest.tar.gz
 
@@ -109,7 +110,8 @@ RUN chmod +x ./usr/bin/wp
 
 RUN mkdir /run/php
 
-COPY ./conf/wp-config.php /var/www/wordpress/wp-config.php
-COPY ./conf/config.sh     /var/www/wordpress/config.sh
+RUN echo hello > /var/www/wordpress/index.html
+
+COPY ./conf/config.sh /var/www/wordpress/config.sh
 RUN chmod +x /var/www/wordpress/config.sh
 CMD ["bash", "/var/www/wordpress/config.sh"]

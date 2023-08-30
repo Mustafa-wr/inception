@@ -35,29 +35,49 @@
 # CMD ["nginx", "-g", "daemon off;"]
 
 
-# Use a Debian-based image as the base
-FROM debian:bullseye
+# # Use a Debian-based image as the base
+# FROM debian:bullseye
 
-# Install Nginx and OpenSSL
-RUN apt-get update && \
-    apt-get install -y nginx openssl && \
-    rm -rf /var/lib/apt/lists/*
+# # Install Nginx and OpenSSL
+# RUN apt-get update && \
+#     apt-get install -y nginx openssl && \
+#     rm -rf /var/lib/apt/lists/*
 
-# # Generate a private key and a self-signed certificate
-RUN openssl genpkey -algorithm RSA -out /etc/nginx/private_key.key && \
-    openssl req -new -key /etc/nginx/private_key.key -out /etc/nginx/certificate.csr -subj "/CN=localhost" && \
-    openssl x509 -req -days 365 -in /etc/nginx/certificate.csr -signkey /etc/nginx/private_key.key -out /etc/nginx/self_signed_certificate.crt
+# # # Generate a private key and a self-signed certificate
+# RUN openssl genpkey -algorithm RSA -out /etc/nginx/private_key.key && \
+#     openssl req -new -key /etc/nginx/private_key.key -out /etc/nginx/certificate.csr -subj "/CN=localhost" && \
+#     openssl x509 -req -days 365 -in /etc/nginx/certificate.csr -signkey /etc/nginx/private_key.key -out /etc/nginx/self_signed_certificate.crt
 
-# RUN	echo hello world > /var/www/html/index.html && echo hi hi hi
+# # RUN	echo hello world > /var/www/html/index.html && echo hi hi hi
 	
 
-# Expose HTTP and HTTPS ports
+# # Expose HTTP and HTTPS ports
+
+# EXPOSE 443
+# # EXPOSE 80
+
+# COPY conf/default.conf /etc/nginx/sites-available/default
+
+# CMD ["nginx", "-g", "daemon off;"]
+
+FROM debian:bullseye
+
+RUN apt-get update && apt-get install -y \
+	nginx \
+	openssl && \
+	rm -rf /var/lib/apt/lists/*
 
 EXPOSE 443
-# EXPOSE 80
 
-COPY conf/default.conf /etc/nginx/sites-available/default
+COPY ./conf/default.conf /etc/nginx/sites-available/default
+
+RUN openssl req -x509 -days 365 -nodes -newkey rsa:4096 \
+	-keyout /etc/ssl/private/nginx.key \
+	-out /etc/ssl/certs/nginx.crt -sha256 -subj "/CN=mradwan.42.fr"
 
 CMD ["nginx", "-g", "daemon off;"]
+
+
+
 
 

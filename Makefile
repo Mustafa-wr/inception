@@ -15,6 +15,8 @@ remove_volumes:
 
 # clean: down
 # 	@docker compose rm -f
+remove_volumes:
+	docker volume rm $$(docker volume ls -q)
 
 fclean: down
 	docker system prune --all --force

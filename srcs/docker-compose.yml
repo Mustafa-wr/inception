@@ -34,7 +34,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/mradwan/Desktop/inception/data/wp
+      device: /home/${USER}/data/wp
     # mariadb:
     #     build: ./mariadb
     #     container_name: mariadb
