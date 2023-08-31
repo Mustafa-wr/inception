@@ -11,9 +11,18 @@ services:
             - '443:443'
         networks:
             - web
+    mariadb:
+        container_name: mariadb
+        build: ./mariadb
+        restart: always
+        env_file: .env
+        volumes:
+            - db:/var/lib/mysql
+        networks:
+            - web
     wordpress:
-        # depends_on:
-        #     - mariadb
+        depends_on:
+            - mariadb
         build: ./wordpress
         container_name: wordpress
         restart: always
@@ -35,6 +44,14 @@ volumes:
       type: none
       o: bind
       device: /home/${USER}/data/wp
+  db:
+    name: db
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/db
+
     # mariadb:
     #     build: ./mariadb
     #     container_name: mariadb

@@ -97,7 +97,6 @@ RUN apt-get update && apt-get install -y \
 	rm -rf /var/lib/apt/lists/*
 
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d
-# Copy ./conf/wp-config.php /var/www/wordpress/
 
 ADD https://wordpress.org/latest.tar.gz /var/www/latest.tar.gz
 
@@ -106,12 +105,16 @@ RUN cd /var/www && tar -xvf latest.tar.gz && \
 
 RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar --output /usr/bin/wp --silent
 
+
+
 RUN chmod +x ./usr/bin/wp
 
 RUN mkdir /run/php
 
-RUN echo hello > /var/www/wordpress/index.html
-
+COPY ./conf/wp-config.php /var/www/wordpress/wp-config.php
+# COPY ./conf/wp-config.sh /var/www/wordpress/wp-config.sh
 COPY ./conf/config.sh /var/www/wordpress/config.sh
 RUN chmod +x /var/www/wordpress/config.sh
+# RUN chmod +x /var/www/wordpress/wp-config.sh
+# RUN sh /var/www/wordpress/wp-config.sh && rm /var/www/wordpress/wp-config.sh
 CMD ["bash", "/var/www/wordpress/config.sh"]

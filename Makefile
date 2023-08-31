@@ -1,3 +1,6 @@
+
+all: build up
+
 up:
 	cd srcs && docker compose up -d
 
@@ -5,6 +8,10 @@ down:
 	cd srcs && docker compose down
 
 build:
+	if [ ! -d "/home/${USER}/data" ]; then \
+		mkdir -p "/home/${USER}/data/wp" \
+		mkdir -p "/home/${USER}/data/db"; \
+	fi
 	cd srcs && docker compose build
 
 logs:
@@ -12,6 +19,7 @@ logs:
 
 remove_volumes:
 	docker volume rm $$(docker volume ls -q)
+	rm -rf /home/${USER}/data
 
 # clean: down
 # 	@docker compose rm -f
@@ -22,4 +30,4 @@ fclean: down
 		docker rmi -f $$(docker images -q); \
 	fi
 
-re: fclean up
+re: fclean all
