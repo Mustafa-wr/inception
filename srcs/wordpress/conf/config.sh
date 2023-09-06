@@ -1,3 +1,4 @@
+
 cd /var/www/wordpress
 
 wp core download --allow-root
