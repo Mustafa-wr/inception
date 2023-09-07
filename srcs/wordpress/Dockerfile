@@ -105,16 +105,14 @@ RUN cd /var/www && tar -xvf latest.tar.gz && \
 
 RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar --output /usr/bin/wp --silent
 
-
-
 RUN chmod +x ./usr/bin/wp
 
 RUN mkdir /run/php
 
 COPY ./conf/wp-config.php /var/www/wordpress/wp-config.php
-# COPY ./conf/wp-config.sh /var/www/wordpress/wp-config.sh
+
 COPY ./conf/config.sh /var/www/wordpress/config.sh
 RUN chmod +x /var/www/wordpress/config.sh
-# RUN chmod +x /var/www/wordpress/wp-config.sh
-# RUN sh /var/www/wordpress/wp-config.sh && rm /var/www/wordpress/wp-config.sh
+
+
 CMD ["bash", "/var/www/wordpress/config.sh"]

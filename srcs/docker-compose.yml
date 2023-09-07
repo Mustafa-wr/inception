@@ -52,23 +52,6 @@ volumes:
       o: bind
       device: /home/${USER}/data/db
 
-    # mariadb:
-    #     build: ./mariadb
-    #     container_name: mariadb
-    #     # restart: always
-    #   # image: mariadb
-    #     restart: always
-    #     env_file:
-    #         - .env
-    #     # image: mariadb:10.3.9
-    #     # container_name: mariadb
-    #     # restart: 'on-failure'
-    #     # environment:
-    #     #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?err}
-    #     # volumes:
-    #     #     - ${PWD}/mariadb:/var/lib/mysql
-        # networks:
-        #    - web
 
 networks:
   web:

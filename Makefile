@@ -19,12 +19,12 @@ logs:
 
 remove_volumes:
 	docker volume rm $$(docker volume ls -q)
-	rm -rf /home/${USER}/data
+	sudo rm -rf /home/${USER}/data
 
 # clean: down
 # 	@docker compose rm -f
 
-fclean: down
+fclean: down remove_volumes
 	docker system prune --all --force
 	@if [ ! -z "$(docker images -q)" ]; then \
 		docker rmi -f $$(docker images -q); \

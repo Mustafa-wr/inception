@@ -1,16 +1,11 @@
-
 cd /var/www/wordpress
 
-wp core download --allow-root
-
-wp config create --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASSWORD --allow-root
-
-wp core config --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASSWORD --allow-root
-
-wp core install --url=$WP_URL --title=$WP_TITLE --admin_user=$ADMIN_USER --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL --allow-root
-
-
-wp user create user1 user1@localhost --role=author --user_pass=$WP_USER_PASSWORD --allow-root
+if [ ! -f wp-config.php ]; then
+    wp core download --allow-root
+    wp config create --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASSWORD --allow-root
+    wp core install --url=$WP_URL --title=$WP_TITLE --admin_user=$ADMIN_USER --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL --allow-root
+    wp user create user1 user1@localhost --role=author --user_pass=$WP_USER_PASSWORD --allow-root
+fi
 
 cd -
 

@@ -1,11 +1,11 @@
-FROM debian:bullseye
+FROM debian:buster
 
 EXPOSE 3306
 
-ARG DB_NAME="root"
-ARG DB_USER="root"
-ARG DB_PASSWORD="root"
-ARG DB_ROOT_PASSWORD="root"
+ARG DB_NAME=${DB_NAME}
+ARG DB_USER=${DB_USER}
+ARG DB_PASSWORD=${DB_PASSWORD}
+ARG DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
 
 RUN apt-get update && apt-get install \
 	mariadb-server -y && \
