@@ -20,20 +20,21 @@ done
 
 
 # Create the database
-mysql -u root -p"1234" -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME};"
+mysqladmin -u root password "${DB_PASSWORD}"
+mysql -u root -p"${DB_PASSWORD}" -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME};"
 
 # Create the user and grant privileges, password will be prompted
-mysql -u root -p"1234" -e "CREATE USER '${DB_USER}'@'%' IDENTIFIED BY '';"
-mysql -u root -p"1234" -e "GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'%';"
+mysql -u root -p"${DB_PASSWORD}" -e "CREATE USER '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';"
+mysql -u root -p"${DB_PASSWORD}" -e "GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'%';"
 
 # Flush privileges
-mysql -u root -p"1234" -e "FLUSH PRIVILEGES;"
+mysql -u root -p"${DB_PASSWORD}" -e "FLUSH PRIVILEGES;"
 
 # Alter the root user's password, password will be prompted
-mysql -u root -p"1234" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';"
+mysql -u root -p"${DB_PASSWORD}" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';"
 
 # Start mysqld_safe
 
-service mariadb stop
+# service mariadb stop
 
-mysqld_safe
+# mysqld_safe
