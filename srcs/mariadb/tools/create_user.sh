@@ -8,19 +8,19 @@
 # mysql -u root -e "FLUSH PRIVILEGES;"
 # mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';"
 
-# mysqld_safe
+# mysqld_safe &
+# mysql_pid=$!
 
 service mariadb start
 
 # Wait for MariaDB to start
-until mysqladmin ping &>/dev/null; do
-    echo "Waiting for MariaDB to start..."
-    sleep 2
-done
+# until mysqladmin ping >/dev/null 2>&1; do
+#   echo -n "."; sleep 0.2
+# done
 
 
 # Create the database
-mysqladmin -u root password "${DB_PASSWORD}"
+# mysql -u root -e "UPDATE user SET password=PASSWORD(${DB_PASSWORD}) WHERE user='root';"
 mysql -u root -p"${DB_PASSWORD}" -e "CREATE DATABASE IF NOT EXISTS ${DB_NAME};"
 
 # Create the user and grant privileges, password will be prompted
@@ -34,7 +34,8 @@ mysql -u root -p"${DB_PASSWORD}" -e "FLUSH PRIVILEGES;"
 mysql -u root -p"${DB_PASSWORD}" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';"
 
 # Start mysqld_safe
-
+mkdir blabl
+# wait $mysql_pid
 # service mariadb stop
 
-# mysqld_safe
+mysqld_safe

@@ -1,11 +1,10 @@
 FROM debian:bullseye
 
-EXPOSE 3306
-
-ARG DB_NAME=${WP_DATABASE}
-ARG DB_USER=${WP_MDB_USER}
-ARG DB_PASSWORD=${WP_MDB_PASSWORD}
-ARG DB_ROOT_PASSWORD=${WP_ADMIN_PASSWORD}
+ARG DB_NAME=${DB_NAME}
+ARG DB_USER=${DB_USER}
+ARG DB_PASSWORD=${DB_PASSWORD}
+ARG DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+# USER root
 
 RUN apt-get update && apt-get install \
 	mariadb-server -y && \
@@ -18,12 +17,15 @@ RUN chmod 777 /var/run/mysql
 # RUN rm /etc/mysql/mariadb.conf.d/my.cnf
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-COPY tools/create_user.sh /
+COPY tools/create_user.sh /tmp/create_user.sh
 # RUN service mariadb start
-RUN bash create_user.sh
-RUN echo ${DB_PASSWORD}
+RUN chmod 755 /tmp/create_user.sh
+# RUN /tmp/create_user.sh
+
+EXPOSE 3306
 # RUN rm -rf create_user.sh
-CMD ["mysqld_safe"]
+CMD ["bash", "/tmp/create_user.sh"]
+# CMD ["sleep", "infinity"]
 # CMD ["sleep", "infinity"]
 # CMD ["bash", "create_user.sh"]
-# CMD ["/bin/bash"]
+# CMD ["/bin/bash"] DB_PASSWORD
