@@ -4,7 +4,7 @@ ARG DB_NAME=${DB_NAME}
 ARG DB_USER=${DB_USER}
 ARG DB_PASSWORD=${DB_PASSWORD}
 ARG DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
-# USER root
+USER root
 
 RUN apt-get update && apt-get install \
 	mariadb-server -y && \
@@ -17,15 +17,15 @@ RUN chmod 777 /var/run/mysql
 # RUN rm /etc/mysql/mariadb.conf.d/my.cnf
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-COPY tools/create_user.sh /tmp/create_user.sh
+COPY tools/create_user.sh /
 # RUN service mariadb start
-RUN chmod 755 /tmp/create_user.sh
-# RUN /tmp/create_user.sh
+RUN bash /create_user.sh
 
+# RUN rm -rf create_user.sh
 EXPOSE 3306
 # RUN rm -rf create_user.sh
-CMD ["bash", "/tmp/create_user.sh"]
-# CMD ["sleep", "infinity"]
+# CMD ["bash", "/tmp/create_user.sh"]
+CMD ["mysqld", "--skip-log-error"]
 # CMD ["sleep", "infinity"]
 # CMD ["bash", "create_user.sh"]
 # CMD ["/bin/bash"] DB_PASSWORD
