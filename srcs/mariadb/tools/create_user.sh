@@ -31,7 +31,7 @@
 #!/bin/bash
 
 # Start MariaDB service
-service mariadb start
+# service mariadb start
 
 # Set the password for the root user
 mysqladmin -u root password "${DB_PASSWORD}"
