@@ -14,7 +14,7 @@ services:
     mariadb:
         container_name: mariadb
         build: ./mariadb
-        restart: always
+        restart: on-failure
         env_file: .env
         volumes:
             - db:/var/lib/mysql
