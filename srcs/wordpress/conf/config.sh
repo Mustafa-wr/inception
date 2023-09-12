@@ -1,19 +1,19 @@
+
+#! /bin/bash
 cd /var/www/wordpress
 
-if [ ! -f wp-config.php ]; then
-    wp core download --allow-root
-    wp config create --dbname=$DB_NAME  --dbuser=$DB_USER --dbpass=$DB_PASSWORD --dbhost=$DB_HOST --allow-root
-    wp core install \
-        --url=$WP_URL \
-        --title=$WP_TITLE \
-        --admin_user=$WP_ADMIN_USER \
-        --admin_password=$WP_ADMIN_PASSWORD \
-        --admin_email=$WP_ADMIN_MAIL \
-        --skip-email --allow-root
+echo hello wordddd
+# if [ ! -f wp-config.php ]; then
+	echo hello world
+    wp core download --force --allow-root
+    # wp config create --dbname=$DB_NAME  --dbuser=$DB_USER --dbpass=$DB_PASSWORD --dbhost=$DB_HOST --allow-root
+    wp --allow-root --path=/var/www/wordpress core install \
+	--url='mradwan.42.fr' --title='WordPress' \
+	--skip-email --admin_email="$WP_ADMIN_MAIL" \
+	--admin_user="$WP_ADMIN_USER" \
+	--admin_password="$WP_ADMIN_PASSWORD"
 	wp user create $WP_USER $WP_USER_MAIL --user_pass=$WP_USER_PASSWORD --role=subscriber --porcelain --allow-root
-fi
-
-cd -
+# fi
 
 php-fpm7.4 -F
 
