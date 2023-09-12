@@ -32,8 +32,6 @@ services:
             - '9000:9000'
         env_file:
             - .env
-        # volumes:
-        #     - ${PWD}/wordpress:/var/www/html
         networks:
             - web
 volumes:
@@ -52,16 +50,7 @@ volumes:
       o: bind
       device: /home/${USER}/data/db
 
-
 networks:
   web:
     driver: bridge
-    # mariadb:
-    #     image: mariadb:10.3.9
-    #     container_name: ${APP_NAME:?err}-mariadb
-    #     restart: 'on-failure'
-    #     environment:
-    #         MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?err}
-    #     volumes:
-            # - ${PWD}
 
