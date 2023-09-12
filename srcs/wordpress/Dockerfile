@@ -143,13 +143,11 @@ RUN cd /var/www && tar -xvf latest.tar.gz && \
 
 USER root
 
-# Install wp-cli as root
 RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp && \
     chmod +x /usr/local/bin/wp
 
 RUN mkdir /run/php
 
-COPY ./conf/wp-config.php /var/www/wordpress/wp-config.php
 
 COPY ./conf/config.sh /var/www/wordpress/config.sh
 RUN chmod +x /var/www/wordpress/config.sh
