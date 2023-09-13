@@ -3,6 +3,7 @@ services:
     nginx:
         depends_on:
             - wordpress
+        env_file: .env
         build: ./nginx
         container_name: nginx
         volumes:
