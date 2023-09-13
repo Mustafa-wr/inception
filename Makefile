@@ -1,4 +1,3 @@
-
 all: build up
 
 up:
@@ -20,9 +19,6 @@ logs:
 remove_volumes:
 	docker volume rm $$(docker volume ls -q)
 	sudo rm -rf /home/${USER}/data
-
-# clean: down
-# 	@docker compose rm -f
 
 fclean: down remove_volumes
 	docker system prune --all --force

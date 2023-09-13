@@ -27,5 +27,4 @@ RUN chmod +x /entrypoint.sh
 COPY tools/create_user.sh /
 RUN chmod +x /create_user.sh
 
-# Run the entrypoint script when the container starts
 CMD ["/entrypoint.sh"]
